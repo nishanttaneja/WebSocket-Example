@@ -150,7 +150,9 @@ extension ViewController: WNViewControllerDataSource, WNViewControllerDelegate {
     // MARK: DataSource
     func itemsForWhatsNewViewController() -> [WNItem] {
         [
+            WNItem(image: .init(systemName: "pencil.tip.crop.circle")!, title: "UI Improvements", description: "Basic UI improvements including background colors and paddings."),
             WNItem(image: .init(systemName: "newspaper")!, title: "What's New", description: "Discover new features. When new features are added, they will be displayed here."),
+            WNItem(image: .init(systemName: "lasso.badge.sparkles")!, title: "WebSocket Implementation", description: "Open a connection and start sending messages. Received messages will be displayed under Responses.")
         ]
     }
     
