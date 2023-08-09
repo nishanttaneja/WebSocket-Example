@@ -139,25 +139,16 @@ final class ViewController: UIViewController, URLSessionWebSocketDelegate, UITex
 
 
 // MARK: - What's New
-extension ViewController: WNViewControllerDataSource, WNViewControllerDelegate {
+extension ViewController {
     private func displayWhatsNew() {
-        let controller = WNViewController()
-        controller.dataSource = self
-        controller.delegate = self
-        present(controller, animated: true)
-    }
-    
-    // MARK: DataSource
-    func itemsForWhatsNewViewController() -> [WNItem] {
-        [
+        let appVersion = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "1.0"
+        let controller = WNViewController(items: [
+            WNItem(image: .init(systemName: "chevron.left.forwardslash.chevron.right")!, title: "Display New Features Only Once", description: "If the current app version is not same as saved by WhatsNew Library, only then What's New screen will be displayed."),
             WNItem(image: .init(systemName: "pencil.tip.crop.circle")!, title: "UI Improvements", description: "Basic UI improvements including background colors and paddings."),
             WNItem(image: .init(systemName: "newspaper")!, title: "What's New", description: "Discover new features. When new features are added, they will be displayed here."),
             WNItem(image: .init(systemName: "lasso.badge.sparkles")!, title: "WebSocket Implementation", description: "Open a connection and start sending messages. Received messages will be displayed under Responses.")
-        ]
-    }
-    
-    // MARK: Delegate
-    func whatsNewViewControllerDidSelectContinue() {
-        
+        ], appVersion: appVersion)
+        guard controller.shouldDisplayWhatsNew() else { return }
+        present(controller, animated: true)
     }
 }
